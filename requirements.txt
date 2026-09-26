@@ -1,0 +1,7 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+torch>=2.4.0
+numpy==1.26.4
+scikit-learn==1.5.2
+pydantic==2.9.2
+pennylane==0.38.0   # optional: only needed if you run with --quantum-head / SENTINELPAY_QUANTUM_HEAD=1
