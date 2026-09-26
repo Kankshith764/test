@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+node_modules/
+.env
+*.pyo
+.DS_Store
+*.db
+fraud-engine/checkpoints/*.pt
+contracts/cache/
+contracts/artifacts/

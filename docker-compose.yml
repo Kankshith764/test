@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  fraud-engine:
+    build: ./fraud-engine
+    ports: ["8001:8001"]
+    volumes: ["./fraud-engine/checkpoints:/app/checkpoints"]
+    environment:
+      - MODEL_CKPT=checkpoints/sentinelfraud.pt
+      - RISK_THRESHOLD=700
+
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      - FRAUD_ENGINE_URL=http://fraud-engine:8001
+      - DATABASE_URL=sqlite:///./sentinelpay.db
+      # - RPC_URL=            # set these three to submit to a real Drunix/EVM chain;
+      # - CONTRACT_ADDRESS=   # left unset -> orchestrator runs in SIMULATED chain mode
+      # - ORACLE_PRIVATE_KEY=
+    depends_on: [fraud-engine]
+
+  frontend:
+    image: nginx:alpine
+    ports: ["3000:80"]
+    volumes: ["./frontend:/usr/share/nginx/html:ro"]
+    depends_on: [backend]
